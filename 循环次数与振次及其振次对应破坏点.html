@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>循环加载实验概念笔记</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.8;
+    color: #2c3e50;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    background: #fafaf7;
+  }
+  h1 {
+    font-size: 1.9em;
+    color: #1a3a5c;
+    border-bottom: 3px solid #3a7ca5;
+    padding-bottom: 12px;
+    margin-top: 0;
+  }
+  h2 {
+    font-size: 1.4em;
+    color: #1a3a5c;
+    margin-top: 2em;
+    padding-left: 12px;
+    border-left: 5px solid #3a7ca5;
+  }
+  h3 {
+    font-size: 1.15em;
+    color: #2c5777;
+    margin-top: 1.5em;
+  }
+  .question {
+    background: #e8f0f5;
+    border-left: 4px solid #3a7ca5;
+    padding: 14px 18px;
+    margin: 30px 0 20px 0;
+    font-weight: 600;
+    border-radius: 4px;
+  }
+  .question::before {
+    content: "问 ";
+    background: #3a7ca5;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-right: 8px;
+    font-size: 0.9em;
+  }
+  .summary {
+    background: #fff8e6;
+    border-left: 4px solid #e0a800;
+    padding: 14px 18px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+  .summary strong:first-child { color: #946800; }
+  .tip {
+    background: #eaf5ea;
+    border-left: 4px solid #5a9c5a;
+    padding: 12px 18px;
+    margin: 16px 0;
+    border-radius: 4px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 16px 0;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  th, td {
+    border: 1px solid #d0d7dc;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  th {
+    background: #3a7ca5;
+    color: white;
+    font-weight: 600;
+  }
+  tr:nth-child(even) td { background: #f7f9fb; }
+  code, .var {
+    background: #f0e6d6;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 0.95em;
+    color: #8b4513;
+  }
+  blockquote {
+    background: #f5f0e8;
+    border-left: 4px solid #b8956a;
+    padding: 12px 18px;
+    margin: 16px 0;
+    color: #5c4a2a;
+    border-radius: 4px;
+  }
+  ul, ol { padding-left: 28px; }
+  li { margin: 6px 0; }
+  hr {
+    border: none;
+    border-top: 1px dashed #b8c5cf;
+    margin: 36px 0;
+  }
+  .toc {
+    background: white;
+    border: 1px solid #d0d7dc;
+    padding: 18px 24px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+  }
+  .toc h3 { margin-top: 0; color: #1a3a5c; }
+  .toc ol { padding-left: 22px; }
+  .toc a {
+    color: #3a7ca5;
+    text-decoration: none;
+  }
+  .toc a:hover { text-decoration: underline; }
+  .formula {
+    background: #f7f5f0;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: "Times New Roman", serif;
+    font-style: italic;
+    display: inline-block;
+    margin: 4px 0;
+  }
+  .meta {
+    text-align: center;
+    color: #7a8a96;
+    font-size: 0.9em;
+    margin-bottom: 30px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<h1>循环加载实验概念笔记</h1>
+<p class="meta">动三轴试验 · 累积塑性应变 · 循环次数 · 对数坐标</p>
+
+<div class="toc">
+  <h3>📑 目录</h3>
+  <ol>
+    <li><a href="#q1">脆性破坏点与破坏振次的判定(图 5.5)</a></li>
+    <li><a href="#q2">什么是循环次数(图 5.7)</a></li>
+    <li><a href="#q3">为什么要用 lgN(对数坐标)</a></li>
+    <li><a href="#q4">循环次数和振次是一回事吗</a></li>
+  </ol>
+</div>
+
+<!-- ============ Q1 ============ -->
+<div class="question" id="q1">如何根据"累积塑性应变—振次曲线"判定脆性破坏点?</div>
+
+<h2>核心概念</h2>
+<ul>
+  <li><strong>水泥土</strong>:把水泥拌进土里,硬化后形成的材料,用来加固地基。又硬又脆,像饼干——平时结实,一裂就碎。</li>
+  <li><strong>脆性破坏</strong>:像折干树枝,前面没动静,"咔"一声就断。没征兆、突然坏。</li>
+  <li><strong>累积塑性应变 <span class="var">ε<sub>p</sub></span></strong>:每震一次留下一点回不去的变形,累加起来的总账。</li>
+  <li><strong>振次 N</strong>:震动的次数(地震、车辆碾压都是这种反复荷载)。</li>
+</ul>
+
+<h2>那张图在讲什么</h2>
+<p>横轴是振次(对数刻度:1、10、100、1000),纵轴是累积下来的永久变形量。两条曲线形状一样:</p>
+<ol>
+  <li>前面 <strong>几乎平直</strong>——震了几十、几百次,样品看着没事;</li>
+  <li>到某一刻 <strong>突然往上一冲</strong>——变形量瞬间飙升,样品垮了。</li>
+</ol>
+<p>这就是脆性破坏的典型特征。</p>
+
+<h2>破坏点定在哪</h2>
+<p>规则:找曲线 <strong>拐弯最急</strong> 的那个点(数学上叫"曲率半径最小的点")。</p>
+<div class="tip">
+  <strong>打个比方</strong>:
+  <ul>
+    <li>直线不弯 → 曲率半径无限大;</li>
+    <li>大圆弯得缓 → 曲率半径大;</li>
+    <li>小圆弯得急 → 曲率半径小;</li>
+    <li>曲线上"最像一个小圆"的位置 = 拐得最狠的尖角。</li>
+  </ul>
+</div>
+<p>在图上,就是曲线从"躺平"变成"竖起来"那个 <strong>最尖的转弯处</strong>。把这个点对应到横轴,读出来的次数就是 <strong>破坏振次</strong>。</p>
+
+<h2>为什么要这么规定</h2>
+<p>因为每个人凭感觉看曲线,判断的破坏点会不一样。规定统一标准(曲率半径最小处),不同人分析同一组数据才能得到一致的结果,实验之间才能互相比较。</p>
+
+<div class="summary">
+  <strong>一句话总结</strong>:水泥土在反复震动下,前期闷不吭声,到临界点会突然崩。图 5.5 教你怎么找那个临界点——看曲线哪里拐得最急。
+</div>
+
+<hr>
+
+<!-- ============ Q2 ============ -->
+<div class="question" id="q2">什么是循环次数?</div>
+
+<h2>先看图在画什么</h2>
+<p>图 5.7 的两张子图都在画 <strong>同一件事</strong>:实验机器在反复"推—放、推—放"地压样品,记录每一时刻样品承受的压力。</p>
+<ul>
+  <li><strong>纵轴 <span class="var">σ<sub>d1</sub></span> (kPa)</strong>:动应力,机器加在样品上的压力大小,单位千帕。</li>
+  <li><strong>横轴 t (s)</strong>:时间,以秒为单位。</li>
+</ul>
+<p>曲线像一排排尖尖的山峰,上下来回波动。每一个 <strong>完整的"上去再下来"</strong>(从低谷涨到峰顶、再回到低谷)就是 <strong>一次循环(1 周)</strong>。</p>
+
+<h2>循环次数的定义</h2>
+<p><strong>循环次数 = 这种"一上一下"重复了多少回</strong>,用字母 <span class="var">N</span> 表示。</p>
+<div class="tip">
+  <strong>生活类比</strong>:
+  <ul>
+    <li>做仰卧起坐,起来一次躺下一次算 1 个,做了 30 个 → N=30;</li>
+    <li>心脏"咚—咚"一次算一次心跳,1 分钟跳 70 下 → 70 次循环;</li>
+    <li>弹簧被压下去再松开 → 1 次循环。</li>
+  </ul>
+</div>
+<p>实验里:压力升到 ~450 kPa,降到 ~25 kPa,再升上来——这就是 1 周。</p>
+
+<h2>为什么标题写"50 周、10 周"</h2>
+<p>这是 <strong>两张图的时间窗口不同</strong>:</p>
+<ul>
+  <li><strong>左图</strong>:横轴 12.5 秒里压了 50 下 → 每秒 4 次 → 频率 4 Hz → 山峰挤在一起,密密麻麻。</li>
+  <li><strong>右图</strong>:横轴 2.5 秒里压了 10 下 → 每秒 4 次 → 同样 4 Hz → 横轴拉长,山峰看起来稀疏清晰。</li>
+</ul>
+<p>其实加载快慢一模一样。右图相当于把左图"放大"了一段,让你看清每个波的形状(确实是漂亮的正弦波,不是乱糟糟的)。</p>
+
+<h2>为什么要做这个实验</h2>
+<p>地震、车辆反复碾压、海浪拍打——都是"反复来回"的力,不是一次性压一下。</p>
+<ul>
+  <li>一次循环 = 模拟"震一下"</li>
+  <li>循环 N 次 = 模拟"震了 N 下"</li>
+  <li>图 5.5 横轴的"振动次数 lgN" = 这里累计的 N。</li>
+</ul>
+
+<div class="summary">
+  <strong>一句话总结</strong>:循环次数 N = 压力"一升一降"重复的次数。图 5.7 画的是机器加压的节奏(每秒 4 次),左图展示 50 次全貌,右图放大展示 10 次细节波形。
+</div>
+
+<hr>
+
+<!-- ============ Q3 ============ -->
+<div class="question" id="q3">为什么要用 lgN(对数坐标)?</div>
+
+<div class="summary">
+  <strong>先回答</strong>:因为 N 跨的范围太大——从 1 次到 10000 次,差了 4 个数量级。普通坐标画不下,画了也看不清前面的细节。<strong>取对数能把大范围"压扁",让大数小数都看得清</strong>。
+</div>
+
+<h2>普通坐标的麻烦</h2>
+<p>如果横轴最大值 10000 用线性坐标,假设一张纸宽 10 cm:</p>
+<ul>
+  <li>1 格(1 cm)= 1000 次;</li>
+  <li>N=1, N=10, N=100 <strong>全挤在最左边 1 毫米以内</strong>,分不开;</li>
+  <li>最关心的"曲线在哪里突然往上拐"——可能就在 N=50 到 N=500 之间——会被压成一小坨。</li>
+</ul>
+<p>实验数据 <strong>前期变化慢但关键</strong>(看清平台段),<strong>后期数值大变化也快</strong>(看清突然上翘)——两头都得看清,线性坐标做不到。</p>
+
+<h2>对数坐标怎么解决</h2>
+<p>lgN 的意思是"取 10 为底的对数":</p>
+<table>
+  <thead>
+    <tr><th>N(真实次数)</th><th>lgN(画图位置)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>0</td></tr>
+    <tr><td>10</td><td>1</td></tr>
+    <tr><td>100</td><td>2</td></tr>
+    <tr><td>1000</td><td>3</td></tr>
+    <tr><td>10000</td><td>4</td></tr>
+  </tbody>
+</table>
+<p>图 5.5 的横轴标 1、10、100、1000、10000,<strong>每一格代表"乘以 10"</strong>。效果:1→10、10→100、100→1000 各占一格,<strong>每个数量级有同样大的展示空间</strong>。</p>
+
+<h2>生活类比</h2>
+<table>
+  <thead>
+    <tr><th>场景</th><th>跨度</th><th>用对数的好处</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>地震里氏震级</td><td>能量差几百万倍</td><td>9 级是 7 级的 1000 倍能量,数字只差 2</td></tr>
+    <tr><td>声音分贝 dB</td><td>强度差 10 万亿倍</td><td>压成 0~130 dB 范围</td></tr>
+    <tr><td>pH 值</td><td>14 个数量级</td><td>压成 0~14</td></tr>
+  </tbody>
+</table>
+<p><strong>共同点</strong>:数据跨度极大时,用对数把"乘法关系"变成"加法关系",画图、看数都方便。</p>
+
+<h2>还有一个更深的原因</h2>
+<blockquote>
+  土工里,材料的疲劳/破坏过程有个经验规律:应变 ε 往往和 <strong>lgN(而不是 N)</strong> 近似成线性关系。
+</blockquote>
+<p>用 lgN 当横轴时,曲线会变成接近直线的形状,<strong>容易拟合公式、容易看规律、容易和别人的研究对比</strong>。这是几十年实验经验得出的——"疲劳损伤累积"本身就具有对数特性。</p>
+
+<div class="summary">
+  <strong>三个原因</strong>:
+  <ol>
+    <li><strong>范围太大</strong>——线性画不下,小数据挤一起;</li>
+    <li><strong>看清不同阶段</strong>——初期平稳到末期突变,每个数量级都看得清;</li>
+    <li><strong>符合规律</strong>——岩土疲劳曲线在对数坐标下更接近直线,方便分析。</li>
+  </ol>
+</div>
+
+<hr>
+
+<!-- ============ Q4 ============ -->
+<div class="question" id="q4">循环次数和振次是一回事吗?</div>
+
+<div class="summary">
+  <strong>是的,完全一样</strong>:循环次数 = 振次 = <span class="var">N</span>,只是叫法不同。
+</div>
+
+<h2>为什么有不同叫法</h2>
+<p>中文里这个概念有好几个常见说法,<strong>都指同一件事——压力"一升一降"重复了多少回</strong>:</p>
+<table>
+  <thead>
+    <tr><th>叫法</th><th>强调的角度</th><th>常见场景</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>循环次数</strong></td><td>强调"循环"动作本身</td><td>实验描述、加载方式(图 5.7)</td></tr>
+    <tr><td><strong>振次</strong></td><td>强调"振动"——反复来回</td><td>抗震分析、动力学(图 5.5)</td></tr>
+    <tr><td>加载周数 / 周次</td><td>一周 = 一次完整循环</td><td>工程实验报告</td></tr>
+    <tr><td>疲劳次数</td><td>强调反复导致损坏</td><td>材料疲劳研究</td></tr>
+    <tr><td>Cycle number (N)</td><td>英文里只有一个词</td><td>国际论文</td></tr>
+  </tbody>
+</table>
+<p>英文世界没这困扰——统统叫 <strong>number of cycles</strong>,符号 <strong>N</strong>。中文翻译时不同作者习惯不同,就出现了多种叫法。</p>
+
+<h2>在两张图里对照</h2>
+<ul>
+  <li><strong>图 5.7</strong>:标题写"循环加载 50 周、10 周"——这里的"周"就是循环次数,1 周 = 1 次循环。</li>
+  <li><strong>图 5.5</strong>:横轴写"振动次数 lgN"——这里的"振动次数"和图 5.7 的"周"是 <strong>同一个 N</strong>。</li>
+</ul>
+<p>图 5.7 画的是"机器怎么一下一下压"的过程图,图 5.5 横轴的 N,就是从图 5.7 那种加载里 <strong>累计数出来的次数</strong>。</p>
+
+<div class="summary">
+  <strong>一句话记住</strong>:振次 = 循环次数 = 周数 = N,都是"压力反复来回的次数"。论文里混着用很正常。
+</div>
+
+<hr>
+
+<p style="text-align: center; color: #7a8a96; font-size: 0.85em; margin-top: 40px;">
+  — 笔记结束 —
+</p>
+
+</body>
+</html>
