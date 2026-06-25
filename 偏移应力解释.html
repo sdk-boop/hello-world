@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>偏移应力为什么等于幅值的一半</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    line-height: 1.85;
+    color: #2c2c2a;
+    background: #fafaf7;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    border-bottom: 2px solid #D85A30;
+    padding-bottom: 12px;
+    margin-bottom: 32px;
+    color: #1a1a18;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    color: #993C1D;
+    border-left: 4px solid #D85A30;
+    padding-left: 12px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    color: #444441;
+  }
+  p { margin: 12px 0; }
+  strong { color: #993C1D; font-weight: 600; }
+  pre {
+    background: #f1efe8;
+    border: 1px solid #d3d1c7;
+    border-radius: 8px;
+    padding: 18px 22px;
+    font-family: "SF Mono", "Consolas", "Microsoft YaHei Mono", monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: auto;
+    color: #2c2c2a;
+  }
+  blockquote {
+    background: #FAECE7;
+    border-left: 4px solid #D85A30;
+    margin: 16px 0;
+    padding: 12px 20px;
+    border-radius: 0 6px 6px 0;
+    color: #4A1B0C;
+  }
+  blockquote p { margin: 6px 0; }
+  ul { padding-left: 24px; }
+  li { margin: 8px 0; }
+  .callout {
+    background: #E1F5EE;
+    border: 1px solid #5DCAA5;
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin: 20px 0;
+    color: #04342C;
+  }
+  .formula {
+    background: #EEEDFE;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-family: "Times New Roman", serif;
+    font-style: italic;
+    color: #26215C;
+  }
+  .arrow { color: #D85A30; font-weight: bold; }
+  hr {
+    border: none;
+    border-top: 1px dashed #b4b2a9;
+    margin: 36px 0;
+  }
+  .end-emoji {
+    font-size: 22px;
+    text-align: center;
+    margin-top: 40px;
+    color: #5F5E5A;
+  }
+  .footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #d3d1c7;
+    font-size: 13px;
+    color: #888780;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>偏移应力为什么等于幅值的一半</h1>
+
+<p>这其实在解释：<strong>"为什么偏移应力 σ<sub>d</sub>/2 等于循环幅值 σ<sub>d</sub> 的一半"</strong>。下面用体重秤的例子讲清楚。</p>
+
+<h2>一、先看动荷载是怎么变化的</h2>
+
+<p>你蹲下、站起的动作，给秤<strong>额外</strong>施加的力是这样变化的：</p>
+
+<pre>站直时    <span class="arrow">→</span>  额外加 0 公斤
+蹲一点    <span class="arrow">→</span>  额外加 5 公斤
+再蹲深    <span class="arrow">→</span>  额外加 15 公斤
+蹲到最低  <span class="arrow">→</span>  额外加 20 公斤   ← 峰值
+开始起身  <span class="arrow">→</span>  额外加 15 公斤
+再起一点  <span class="arrow">→</span>  额外加 5 公斤
+完全站直  <span class="arrow">→</span>  额外加 0 公斤    ← 回到起点</pre>
+
+<div class="callout">
+<strong>注意：</strong>这个"额外加的力"从来不会变成负数（你不会把秤往上拉）。它在 <strong>0 到 20 之间</strong>来回变化。
+</div>
+
+<h2>二、那"平均"是多少？</h2>
+
+<p>如果你不停地蹲蹲起起，秤上多出来的力<strong>有时候是 0，有时候是 20，大部分时间在中间</strong>。</p>
+
+<p>把所有时刻的值平均起来 <span class="arrow">→</span> <strong>正好是 10</strong>（也就是 20 的一半）。</p>
+
+<p>这就像问："一个从 0 涨到 20 又跌回 0 的数，平均是多少？" 答案就是中点 <strong>10</strong>。</p>
+
+<h2>三、所以那句话的意思是</h2>
+
+<blockquote>
+<p>"动荷载从 0 增大到 20，又减回 0，平均下来等于 10"</p>
+</blockquote>
+
+<p>= 你蹲蹲起起这个动作，让秤额外承受的力时大时小，但<strong>平均下来是 10 公斤</strong>。</p>
+
+<blockquote>
+<p>"土样除了原本扛着的 50 公斤围压，平均还多扛了 10 公斤"</p>
+</blockquote>
+
+<p>= 土样原本就稳稳承受着 50 公斤（围压），现在你又给它加了一个会变化的动荷载。这个动荷载有时给它加 0，有时给它加 20，<strong>但平均效果相当于一直多压了 10 公斤</strong>。</p>
+
+<h2>四、一个更生活化的比喻</h2>
+
+<p>想象你背着一个 50 斤的书包（= 围压），稳稳的。</p>
+
+<p>现在我往你书包里<strong>反复放一块 20 斤的砖头、又拿走、又放、又拿走</strong>……</p>
+
+<ul>
+  <li>砖头在的时候：你扛 <strong>70 斤</strong></li>
+  <li>砖头不在的时候：你扛 <strong>50 斤</strong></li>
+  <li><strong>平均下来你扛了多少？</strong> <span class="arrow">→</span> 60 斤（多扛了 10 斤）</li>
+</ul>
+
+<div class="callout">
+<p>那"<strong>多扛的 10 斤</strong>"，就是偏移应力 <span class="formula">σ<sub>d</sub>/2</span>。</p>
+<p>而那块<strong>砖头本身的重量 20 斤</strong>，就是循环荷载幅值 <span class="formula">σ<sub>d</sub></span>。</p>
+</div>
+
+<hr>
+
+<h2>📌 一句话总结</h2>
+
+<ul>
+  <li><span class="formula">σ<sub>d</sub></span>（幅值）：动荷载<strong>晃动的总幅度</strong>（最高 − 最低）</li>
+  <li><span class="formula">σ<sub>d</sub>/2</span>（偏移）：动荷载让土样<strong>平均多承受的压力</strong>（幅度的一半）</li>
+</ul>
+
+<p>一个描述"晃得有多厉害"，一个描述"平均压得有多重"。</p>
+
+<div class="end-emoji">明白了吗？😊</div>
+
+<div class="footer">
+  动三轴试验术语笔记 · 体重秤类比版
+</div>
+
+</body>
+</html>
